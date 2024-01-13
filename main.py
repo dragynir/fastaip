@@ -35,3 +35,23 @@ fake_trades = [
 @app.get("/trades/")
 def get_trades(limit: int = 0, offset: int = 1):
     return fake_trades[offset:][:limit]
+
+
+fake_users2 = [
+    {'id': 1, 'role': 'admin', 'name': 'Alice'},
+    {'id': 2, 'role': 'traider', 'name': 'Bob'},
+]
+
+
+# Пример обновления данных в базу
+# Эндпоинт оставили тот же "/users/{user_id}"
+# curl -X 'POST' \
+#   'http://127.0.0.1:8000/users/1?new_name=cat' \
+#   -H 'accept: application/json' \
+#   -d ''
+@app.post("/users/{user_id}")
+def change_user_name(user_id: int, new_name: str):
+    current_user = list(filter(lambda user: user['id'] == user_id, fake_users2))[0]
+    current_user['name'] = new_name
+    return {'status': 200, "data": current_user}
+
