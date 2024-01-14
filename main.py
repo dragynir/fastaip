@@ -1,4 +1,7 @@
+from typing import List
+
 from fastapi import FastAPI
+from pydantic import BaseModel, Field
 
 app = FastAPI(title="Backend")
 
@@ -54,4 +57,26 @@ def change_user_name(user_id: int, new_name: str):
     current_user = list(filter(lambda user: user['id'] == user_id, fake_users2))[0]
     current_user['name'] = new_name
     return {'status': 200, "data": current_user}
+
+
+
+class Trade(BaseModel):
+    id: int
+    user_id: int
+    currency: str = Field(max_length=5)  # валидация максимальной длины строки
+    price: float = Field(ge=0)  # валидация на price >= 0
+    amount: float
+
+
+fake_trades3 = []
+
+
+# Пример с pydantic для валидации входных данных
+# В теле запроса ожидаем list из экземпляров Trade
+@app.post("/trades")
+def add_trades(trades: List[Trade]):
+    fake_trades3.extend(trades)
+    return {'status': 200, "data": fake_trades}
+
+
 
