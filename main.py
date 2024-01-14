@@ -1,3 +1,5 @@
+from datetime import datetime
+from enum import Enum
 from typing import List
 
 from fastapi import FastAPI
@@ -80,15 +82,34 @@ def add_trades(trades: List[Trade]):
 
 
 
+class DegreeType(Enum):
+    newby = 'newby'
+    expert = 'expert'
+
+
+class Degree(BaseModel):
+    name: DegreeType
+    change: int
+    created_at: datetime
+
+
 class User(BaseModel):
     id: int
     role: str
     name: str
+    degree: Degree
+
+
+fake_users_val = [
+    {'id': 1, 'role': 'admin', 'name': 'Alice', 'degree': Degree(name="newby", change=2, created_at=datetime.now())},
+    {'id': 2, 'role': 'traider', 'name': 'Bob', 'degree': Degree(name="expert", change=3, created_at=datetime.now())},
+]
 
 # Пример добавления валидации выходных данных
 # response_model=List[User] - позволяет отобразить
 # в документации формат выходных данных
+# и enum в том числе отображается
 @app.get("/users_new/{user_id}", response_model=List[User])
 def get_user(user_id: int):  # тайпхинт важен, т к по нему user_id из строки кастуется к int
     """Get user from database."""
-    return [user for user in fake_users if user['id'] == user_id]
+    return [user for user in fake_users_val if user['id'] == user_id]
