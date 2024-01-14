@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
@@ -95,7 +95,7 @@ class Degree(BaseModel):
 
 class User(BaseModel):
     id: int
-    role: str
+    role: Optional[str] = None
     name: str
     degree: Degree
 
@@ -103,6 +103,7 @@ class User(BaseModel):
 fake_users_val = [
     {'id': 1, 'role': 'admin', 'name': 'Alice', 'degree': Degree(name="newby", change=2, created_at=datetime.now())},
     {'id': 2, 'role': 'traider', 'name': 'Bob', 'degree': Degree(name="expert", change=3, created_at=datetime.now())},
+    {'id': 3, 'name': 'Bob', 'degree': Degree(name="expert", change=3, created_at=datetime.now())},
 ]
 
 # Пример добавления валидации выходных данных
