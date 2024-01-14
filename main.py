@@ -80,3 +80,15 @@ def add_trades(trades: List[Trade]):
 
 
 
+class User(BaseModel):
+    id: int
+    role: str
+    name: str
+
+# Пример добавления валидации выходных данных
+# response_model=List[User] - позволяет отобразить
+# в документации формат выходных данных
+@app.get("/users_new/{user_id}", response_model=List[User])
+def get_user(user_id: int):  # тайпхинт важен, т к по нему user_id из строки кастуется к int
+    """Get user from database."""
+    return [user for user in fake_users if user['id'] == user_id]
