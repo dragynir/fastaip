@@ -18,6 +18,7 @@ async def get_specific_operations(operation_type: str, session: AsyncSession = D
     result = await session.execute(query)
     return [dict(data._mapping) for data in result.all()]
 
+
 @router.post("")
 async def add_specific_operation(new_operation: OperationCreate, session: AsyncSession = Depends(get_async_session)):
     statement = insert(operation).values(new_operation.model_dump())
