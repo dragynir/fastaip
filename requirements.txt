@@ -4,3 +4,4 @@ alembic
 psycopg2
 fastapi-users[sqlalchemy]
 asyncpg
+fastapi-cache2[redis]
