@@ -31,5 +31,6 @@ app.include_router(router_operation)
 
 @app.on_event("startup")  # execute when fastapi app startup
 async def startup():
+    # https://redis.io/docs/connect/clients/python/
     redis = aioredis.from_url("redis://localhost")
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
