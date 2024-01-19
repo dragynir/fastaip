@@ -2,12 +2,28 @@
 
 Launch
 
-uvicorn main:app --reload
+`uvicorn main:app --reload`
 
 
 http://127.0.0.1:8000 - тут будет приложение
 
 http://127.0.0.1:8000/docs - тут будет дока swagger api
+
+
+Launch celery workers
+
+`celery -A tasks.tasks:celery worker --loglevel=INFO --pool=solo`
+
+# Каждый раз надо перезапускать celery т к он не может в autoreload
+# tasks.tasks:celery - переменная с экземпляром Celery
+# --pool=solo - only for windows (cause of bugs)
+
+
+Launch flower for workers monitoring
+
+`celery -A tasks.tasks:celery flower`
+
+http://localhost:5555/ - тут будет интерфейс flower
 
 
 Инициализация миграций:
