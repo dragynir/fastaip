@@ -37,3 +37,6 @@ http://127.0.0.1:8000/docs - тут будет дока swagger api
 TODO
 
 нужно будет все в Docker обернуть
+
+
+# SMTP_service

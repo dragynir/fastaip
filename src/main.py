@@ -9,6 +9,7 @@ from operations.router import router as router_operation
 
 from redis import asyncio as aioredis
 
+from tasks.routes import tasks_router
 
 app = FastAPI(
     title="Trading App"
@@ -27,6 +28,8 @@ app.include_router(
 )
 
 app.include_router(router_operation)
+
+app.include_router(tasks_router)
 
 
 @app.on_event("startup")  # execute when fastapi app startup
