@@ -55,4 +55,10 @@ TODO
 нужно будет все в Docker обернуть
 
 
+# Deploy
+
+
+docker build . -t fastapi_app:latest
+docker run -p 7329:8000 fastapi_app
+
 # SMTP_service
