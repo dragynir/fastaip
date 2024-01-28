@@ -14,6 +14,8 @@ from redis import asyncio as aioredis
 
 from tasks.routes import tasks_router
 
+from config import REDIS_HOST, REDIS_PORT
+
 app = FastAPI(
     title="Trading App"
 )
@@ -60,5 +62,5 @@ app.add_middleware(
 @app.on_event("startup")  # execute when fastapi app startup
 async def startup():
     # https://redis.io/docs/connect/clients/python/
-    redis = aioredis.from_url("redis://localhost")
+    redis = aioredis.from_url(f"redis://{REDIS_HOST}:{REDIS_PORT}", encoding="utf8", decode_responses=True)
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
